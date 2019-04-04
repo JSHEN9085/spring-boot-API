@@ -25,7 +25,12 @@ public class FakeUserDataAccessService implements UserDao {
 
     @Override
     public int deleteUserById(UUID id) {
-        return 0;
+        Optional<User> maybeUser = selectUserById(id);
+        if(maybeUser.isEmpty()){
+            return 0;
+        }
+        DB.remove(maybeUser.get());
+        return 1;
     }
 
     @Override
@@ -34,7 +39,14 @@ public class FakeUserDataAccessService implements UserDao {
     }
 
     @Override
-    public int deleteUserById(UUID id, User user) {
-        return 0;
+    public int updateUserById(UUID id, User user) {
+        return selectUserById(id).map( u -> {
+            int indexOfUserToDelete = DB.indexOf(u);
+            if(indexOfUserToDelete >= 0){
+                DB.set(indexOfUserToDelete, u);
+                return 1;
+            }
+            return 0;
+        }).orElse(0);
     }
 }

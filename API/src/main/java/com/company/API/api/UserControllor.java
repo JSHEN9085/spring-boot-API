@@ -32,4 +32,14 @@ public class UserControllor {
         return userService.getUserById(id).orElse(null);
     }
 
+    @DeleteMapping(path = "/{id}")
+    public void deleteUserById(@PathVariable("id") UUID id){
+        userService.deleteUser(id);
+    }
+
+    @PutMapping(path = "/{id}")
+    public void updateUserById(@PathVariable("id") UUID id, @RequestBody User user){
+        userService.updateUser(id, user);
+    }
+
 }
