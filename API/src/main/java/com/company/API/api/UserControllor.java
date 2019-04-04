@@ -2,8 +2,10 @@ package com.company.API.api;
 
 import com.company.API.model.User;
 import com.company.API.service.UserService;
+import org.springframework.lang.NonNull;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.UUID;
 
@@ -18,7 +20,7 @@ public class UserControllor {
     }
 
     @PostMapping
-    public void addUser(@RequestBody User user){
+    public void addUser(@Valid @NonNull @RequestBody User user){
         userService.addUser(user);
     }
 
@@ -38,7 +40,7 @@ public class UserControllor {
     }
 
     @PutMapping(path = "/{id}")
-    public void updateUserById(@PathVariable("id") UUID id, @RequestBody User user){
+    public void updateUserById(@PathVariable("id") UUID id, @Valid @NonNull @RequestBody User user){
         userService.updateUser(id, user);
     }
 

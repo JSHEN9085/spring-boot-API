@@ -2,6 +2,8 @@ package com.company.API.service;
 
 import com.company.API.dao.UserDao;
 import com.company.API.model.User;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,7 +14,8 @@ import java.util.UUID;
 public class UserService {
     private final UserDao userDao;
 
-    public UserService(UserDao userDao) {
+    @Autowired
+    public UserService(@Qualifier("postgres") UserDao userDao) {
         this.userDao = userDao;
     }
 
