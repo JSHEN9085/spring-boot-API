@@ -5,6 +5,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Repository
@@ -15,5 +16,25 @@ public class FakeUserDataAccessService implements UserDao {
     public int insertUser(UUID id, User user) {
         DB.add(new User(id, user.getName()));
         return 1;
+    }
+
+    @Override
+    public List<User> selectAllUsers() {
+        return DB;
+    }
+
+    @Override
+    public int deleteUserById(UUID id) {
+        return 0;
+    }
+
+    @Override
+    public Optional<User> selectUserById(UUID id) {
+        return DB.stream().filter(user -> user.getId().equals(id)).findFirst();
+    }
+
+    @Override
+    public int deleteUserById(UUID id, User user) {
+        return 0;
     }
 }
